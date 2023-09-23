@@ -182,7 +182,7 @@ Router.post('/register', (req, res) => {
 })
 
 Router.post('/verify', (req, res) => {
-    const domain = req.get('host')
+    const domain = req.body.domain
     if(domain === undefined || domain === null || domain === false || domain == "" || !domain){
         res.status(404).json({status: 401, message: 'Undefined user.'})
     } else {
