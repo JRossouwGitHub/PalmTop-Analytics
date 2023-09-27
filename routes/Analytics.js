@@ -131,13 +131,13 @@ Router.get('/analytics', (req, res) => {
 })
 
 Router.get('/verify', (req, res) => {
-    const domain = req.get('host')
+    const domain = req.body.domain
     if(domain === undefined || domain === null || domain === false || domain == "" || !domain){
         res.status(404).json({status: 401, message: 'Undefined user.'})
     } else {
         mongoose.connect(uri)
         .then(() => {
-            Accounts.find(domain.toLocaleLowerCase() ? {domain: domain.toLocaleLowerCase()} : null)
+            Accounts.find(domain.toLocaleLowerCase() ? {domain: {$regex: ".*" + domain.toLocaleLowerCase()}} : null)
                 .sort({date: -1})
                 .then((accounts) => {
                     mongoose.connection.close()
@@ -172,7 +172,7 @@ Router.post('/register', (req, res) => {
             newAccount.save()
                 .then((account) => {
                     mongoose.connection.close()
-                    res.status(200).json({status: 200, message: "Account created.", account: {name: account.first_name + " " + account.last_name, emai: account.email, domain: account.domain, account_id: account._id}})
+                    res.status(200).json({status: 200, message: "Account created.", account: {name: account.first_name + " " + account.last_name, emai: account.email, domain: account.domain.toLocaleLowerCase(), account_id: account._id}})
                 })
                 .catch((err) => {
                     mongoose.connection.close()
