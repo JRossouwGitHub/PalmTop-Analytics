@@ -73,7 +73,7 @@ Router.use(function(req, res, next) {
 });
 
 Router.all('/', (req, res) => {
-    res.redirect('https://analytics.palmtop.co.nz');
+    res.redirect('https://www.palmtop.co.nz');
 })
 
 Router.get('/status', (req, res) => {
