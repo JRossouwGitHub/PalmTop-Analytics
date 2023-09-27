@@ -5,6 +5,7 @@ const config = require('../config.json')
 const Accounts = require('../models/Accounts.js')
 const Analytics = require('../models/Analytics.js')
 const uri = config.MONGODB_CONNECTION + (config.SERVER_BASE_URL.includes('http://localhost') ? 'analytics-dev' : 'analytics')
+const path = require('path')
 
 const mapData = (data, activityData, type) => {
     let dataObject = {
@@ -74,6 +75,11 @@ Router.use(function(req, res, next) {
 
 Router.all('/', (req, res) => {
     res.redirect('https://www.palmtop.co.nz');
+})
+
+Router.get('/js/bundle/analytics.min.1.0.0.js', (req, res) => {
+    const filePath = path.join(__dirname, '../public/js/bundle/analytics.min.1.0.0.js');
+    res.sendFile(filePath);
 })
 
 Router.get('/status', (req, res) => {
