@@ -137,7 +137,7 @@ Router.get('/verify', (req, res) => {
     } else {
         mongoose.connect(uri)
         .then(() => {
-            Accounts.find(domain.toLocaleLowerCase() ? {domain: {$regex: ".*" + domain.toLocaleLowerCase()}} : null)
+            Accounts.find(domain.toLocaleLowerCase() ? {domain: domain.toLocaleLowerCase()} : null)
                 .sort({date: -1})
                 .then((accounts) => {
                     mongoose.connection.close()

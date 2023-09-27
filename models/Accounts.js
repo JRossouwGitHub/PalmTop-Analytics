@@ -19,7 +19,8 @@ const AccountsSchema = new Schema({
         required: true
     },
     domain: {
-        type: String,
+        name: String,
+        type: [String],
         required: true,
         unique: true,
         dropDups: true
